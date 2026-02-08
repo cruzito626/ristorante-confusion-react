@@ -59,8 +59,9 @@ class CommentForm extends Component {
   }
 
   handleSubmit(values) {
+    this.toggleModal();
     console.log('Current State is: ' + JSON.stringify(values));
-    alert('Current State is: ' + JSON.stringify(values));
+    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
   }
 
   render() {
@@ -129,9 +130,9 @@ class CommentForm extends Component {
             </Row>
 
             <Row className="form-group">
-              <Label htmlFor="commet" md={12}>Comment</Label>
+              <Label htmlFor="comment" md={12}>Comment</Label>
               <Col md={12}>
-                <Control.textarea model=".commet" id="commet" name="commet"
+                <Control.textarea model=".comment" id="comment" name="comment"
                   rows="6"
                   className="form-control"></Control.textarea>
               </Col>
@@ -170,7 +171,7 @@ class RenderComments extends Component {
   render() {
     const dateFormat = { year: 'numeric', month: 'short', day: 'numeric' };
     const region = 'en-US';
-    const { comments } = this.props;
+    const { comments, addComment, dishId } = this.props;
     return (
       <div className='col-6'>
         <div>
@@ -191,13 +192,13 @@ class RenderComments extends Component {
             }
           </ul>
         </div>
-        <CommentForm />
+        <CommentForm addComment={addComment} dishId={dishId} />
       </div>
     );
   }
 };
 
-const DishDetail = ({ dish, comments }) => {
+const DishDetail = ({ dish, comments, addComment }) => {
   if (dish != null) {
     return (
       <div className="container">
@@ -211,7 +212,11 @@ const DishDetail = ({ dish, comments }) => {
         </div>
         <div className="row">
           <RenderDish dish={dish} />
-          <RenderComments comments={comments} />
+          <RenderComments
+            comments={comments}
+            addComment={addComment}
+            dishId={dish.id}
+          />
         </div>
       </div>
     );
