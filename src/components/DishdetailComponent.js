@@ -200,6 +200,7 @@ class RenderComments extends Component {
 };
 
 const DishDetail = ({ dish, comments, addComment, isLoading, errMess }) => {
+  console.log({ dish, comments, addComment, isLoading, errMess });
   if (isLoading) {
     return (
       <div className="container">

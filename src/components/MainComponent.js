@@ -61,10 +61,10 @@ class Main extends Component {
       const { dishId } = match.params;
       return (
         <DishDetail
-          dish={this.props.dishes.dishes.filter((dish) => dish.id === parseInt(dishId, 10))[0]}
+          dish={this.props.dishes.dishes.find((dish) => parseInt(dish.id, 10) === parseInt(dishId, 10))}
           isLoading={this.props.dishes.isLoading}
           errMess={this.props.dishes.errMess}
-          comments={this.props.comments.comments.filter((comment) => comment.dishId === parseInt(dishId, 10))}
+          comments={this.props.comments.comments.filter((comment) => parseInt(comment.dishId, 10) === parseInt(dishId, 10))}
           commentsErrMess={this.props.comments.errMess}
           addComment={this.props.addComment}
         />
