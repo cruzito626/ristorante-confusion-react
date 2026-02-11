@@ -62,7 +62,7 @@ class CommentForm extends Component {
   handleSubmit(values) {
     this.toggleModal();
     console.log('Current State is: ' + JSON.stringify(values));
-    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+    this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
   }
 
   render() {
@@ -172,7 +172,7 @@ class RenderComments extends Component {
   render() {
     const dateFormat = { year: 'numeric', month: 'short', day: 'numeric' };
     const region = 'en-US';
-    const { comments, addComment, dishId } = this.props;
+    const { comments, postComment, dishId } = this.props;
     return (
       <div className='col-6'>
         <div>
@@ -181,6 +181,7 @@ class RenderComments extends Component {
             {
               comments.map((comment) => {
                 let { id, comment: text, author, date } = comment;
+                console.log({ date , typeof: typeof date });
                 date = new Intl.DateTimeFormat(region, dateFormat).format(new Date(date));
                 return (
                   <li key={id}>
@@ -193,14 +194,13 @@ class RenderComments extends Component {
             }
           </ul>
         </div>
-        <CommentForm addComment={addComment} dishId={dishId} />
+        <CommentForm postComment={postComment} dishId={dishId} />
       </div>
     );
   }
 };
 
-const DishDetail = ({ dish, comments, addComment, isLoading, errMess }) => {
-  console.log({ dish, comments, addComment, isLoading, errMess });
+const DishDetail = ({ dish, comments, postComment, isLoading, errMess }) => {
   if (isLoading) {
     return (
       <div className="container">
@@ -232,7 +232,7 @@ const DishDetail = ({ dish, comments, addComment, isLoading, errMess }) => {
           <RenderDish dish={dish} />
           <RenderComments
             comments={comments}
-            addComment={addComment}
+            postComment={postComment}
             dishId={dish.id}
           />
         </div>
