@@ -19,6 +19,7 @@
     "react-redux-form": "^1.16.8",
     "react-router-dom": "^4.2.2",
     "react-scripts": "3.4.3",
+    "react-transition-group": "^2.3.0",
     "reactstrap": "^5.0.0",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
@@ -44,5 +45,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "packageManager": "pnpm@9.1.4+sha512.9df9cf27c91715646c7d675d1c9c8e41f6fce88246f1318c1aa6a1ed1aeb3c4f032fcdf4ba63cc69c4fe6d634279176b5358727d8f2cc1e65b65f43ce2f8bfb0"
 }
