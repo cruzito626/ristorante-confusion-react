@@ -17,6 +17,7 @@ import {
   Row
 } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
@@ -30,15 +31,21 @@ const isNumber = (val) => !isNaN(Number(val));
 const RenderDish = ({ dish }) => {
   const { name, image, description } = dish;
   return (
-    <div className='col-6'>
-      <Card>
-        <CardImg top src={baseUrl + image} alt={name} />
-        <CardBody>
-          <CardTitle>{name}</CardTitle>
-          <CardText>{description}</CardText>
-        </CardBody>
-      </Card>
-    </div>
+    <FadeTransform
+      in
+      transformProps={{
+        exitTransform: 'scale(0.5) translateY(-50%)'
+      }}>
+      <div className='col-6'>
+        <Card>
+          <CardImg top src={baseUrl + image} alt={name} />
+          <CardBody>
+            <CardTitle>{name}</CardTitle>
+            <CardText>{description}</CardText>
+          </CardBody>
+        </Card>
+      </div>
+    </FadeTransform >
   );
 };
 
@@ -178,20 +185,25 @@ class RenderComments extends Component {
         <div>
           <h4>Coments</h4>
           <ul className="list-unstyled">
-            {
-              comments.map((comment) => {
-                let { id, comment: text, author, date } = comment;
-                console.log({ date , typeof: typeof date });
-                date = new Intl.DateTimeFormat(region, dateFormat).format(new Date(date));
-                return (
-                  <li key={id}>
-                    <div>{text}</div>
-                    <div>-- {author} , {date}</div>
-                    <br />
-                  </li>
-                )
-              })
-            }
+            <Stagger in>
+
+              {
+                comments.map((comment) => {
+                  let { id, comment: text, author, date } = comment;
+                  console.log({ date, typeof: typeof date });
+                  date = new Intl.DateTimeFormat(region, dateFormat).format(new Date(date));
+                  return (
+                    <Fade in>
+                      <li key={id}>
+                        <div>{text}</div>
+                        <div>-- {author} , {date}</div>
+                        <br />
+                      </li>
+                    </Fade>
+                  )
+                })
+              }
+            </Stagger>
           </ul>
         </div>
         <CommentForm postComment={postComment} dishId={dishId} />
